@@ -20,11 +20,11 @@ import { AuthProvider, AuthConsumer } from 'src/auth/context/jwt';
 // ----------------------------------------------------------------------
 
 export const metadata = {
-  title: 'Minimal UI Kit',
+  title: 'UniNex: Connecting United International University Students',
   description:
-    'The starting point for your next project with Minimal UI Kit, built on the newest version of Material-UI ©, ready to be customized to your style',
-  keywords: 'react,material,kit,application,dashboard,admin,template',
-  themeColor: '#000000',
+    'Welcome to UniNex, an innovative project designed by the students of United International University to foster a thriving community of learners. UniNex is a dynamic networking platform that goes beyond conventional boundaries, offering a multitude of features to enhance your university experience and propel your academic journey.',
+  keywords: 'university,UIU,students,networking,community,learning,platform',
+  themeColor: '#007BFF',
   manifest: '/manifest.json',
   icons: [
     {
@@ -58,11 +58,11 @@ export default function RootLayout({ children }) {
         <AuthProvider>
           <SettingsProvider
             defaultSettings={{
-              themeMode: 'light', // 'light' | 'dark'
+              themeMode: 'dark', // 'light' | 'dark'
               themeDirection: 'ltr', //  'rtl' | 'ltr'
               themeContrast: 'default', // 'default' | 'bold'
               themeLayout: 'vertical', // 'vertical' | 'horizontal' | 'mini'
-              themeColorPresets: 'default', // 'default' | 'cyan' | 'purple' | 'blue' | 'orange' | 'red'
+              themeColorPresets: 'orange', // 'default' | 'cyan' | 'purple' | 'blue' | 'orange' | 'red'
               themeStretch: false,
             }}
           >
