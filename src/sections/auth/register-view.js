@@ -12,6 +12,8 @@ import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import InputAdornment from '@mui/material/InputAdornment';
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 // hooks
 import { useBoolean } from 'src/hooks/use-boolean';
 // routes
@@ -41,14 +43,41 @@ export default function RegisterView() {
 
   const password = useBoolean();
 
+  const roles = [
+    { value: 'student', label: 'Student', icon: 'mdi:account-school-outline' },
+    { value: 'faculty', label: 'Faculty', icon: 'mdi-account-group' },
+    { value: 'alumni', label: 'Alumni', icon: 'mdi:account-group-outline' },
+  ];  
+
   const RegisterSchema = Yup.object().shape({
+    role: Yup.string()
+      .required('Role is required')
+      .oneOf(roles.map(role => role.value), 'Invalid role option'),
+    id: Yup.string().required('ID Card Number is required'),
     firstName: Yup.string().required('First name required'),
     lastName: Yup.string().required('Last name required'),
-    email: Yup.string().required('Email is required').email('Email must be a valid email address'),
-    password: Yup.string().required('Password is required'),
+    email: Yup.string()
+      .when('role', {
+        is: role => ['student', 'faculty'].includes(role),
+        then: () => Yup.string()
+          .email('Invalid email format')
+          .matches(/^[a-zA-Z0-9._%+-]+@(?:[a-zA-Z0-9-]+\.)?uiu\.ac\.bd$/, {
+            message: 'Email must end with @uiu.ac.bd or @[any subdomain].uiu.ac.bd',
+            excludeEmptyString: true,
+          })
+          .required('Email is required'),
+        otherwise: () => Yup.string().email('Invalid email format'),
+      }),
+      password: Yup.string()
+        .required('Password is required')
+        .min(6, 'Password must be at least 6 characters')
+        .max(32, 'Password must not exceed 32 characters'),
   });
+    
 
   const defaultValues = {
+    role: 'student',
+    id: '',
     firstName: '',
     lastName: '',
     email: '',
@@ -62,13 +91,19 @@ export default function RegisterView() {
 
   const {
     reset,
+    watch,
+    setValue,
     handleSubmit,
     formState: { isSubmitting },
   } = methods;
 
+  const handleRoleChange = (event, newRole) => {
+    setValue('role', newRole);
+  };
+
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await register?.(data.email, data.password, data.firstName, data.lastName);
+      await register?.(data);
 
       router.push(returnTo || PATH_AFTER_LOGIN);
     } catch (error) {
@@ -118,13 +153,30 @@ export default function RegisterView() {
     <FormProvider methods={methods} onSubmit={onSubmit}>
       <Stack spacing={2.5}>
         {!!errorMsg && <Alert severity="error">{errorMsg}</Alert>}
+        
+          <ToggleButtonGroup value={watch('role')} exclusive color="primary" onChange={handleRoleChange}>
+            {roles.map(role => (
+              <ToggleButton key={role.value} value={role.value}>
+                <Stack direction="row" spacing={1}>
+                  <Iconify icon={role.icon} />
+                  <Typography variant="body2">{role.label}</Typography>
+                </Stack>
+              </ToggleButton>
+            ))}
+          </ToggleButtonGroup>
+
+        <RHFTextField name="id" label="ID Card Number" />
 
         <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
           <RHFTextField name="firstName" label="First name" />
           <RHFTextField name="lastName" label="Last name" />
         </Stack>
 
-        <RHFTextField name="email" label="Email address" />
+        <RHFTextField 
+          name="email" 
+          label="Email address" 
+          helperText={watch('role') === 'student' || watch('role') === 'faculty' ? 'Must be a valid UIU email' : ''}
+        />
 
         <RHFTextField
           name="password"

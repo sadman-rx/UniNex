@@ -11,7 +11,7 @@ import AuthClassicLayout from 'src/layouts/auth/classic';
 export default function Layout({ children }) {
   return (
     <GuestGuard>
-      <AuthClassicLayout title="Manage the job more effectively with Minimal">
+      <AuthClassicLayout title="Empowering UIU: Connect, Learn, Thrive Together!">
         {children}
       </AuthClassicLayout>
     </GuestGuard>
