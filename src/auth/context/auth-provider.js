@@ -157,7 +157,6 @@ export function AuthProvider({ children }) {
   const memoizedValue = useMemo(
     () => ({
       user: state.user,
-      method: 'jwt',
       loading: status === 'loading',
       authenticated: status === 'authenticated',
       unauthenticated: status === 'unauthenticated',

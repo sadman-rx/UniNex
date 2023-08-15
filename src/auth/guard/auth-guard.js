@@ -8,16 +8,10 @@ import { useAuthContext } from '../hooks';
 
 // ----------------------------------------------------------------------
 
-const loginPaths = {
-  jwt: paths.auth.jwt.login,
-};
-
-// ----------------------------------------------------------------------
-
 export default function AuthGuard({ children }) {
   const router = useRouter();
 
-  const { authenticated, method } = useAuthContext();
+  const { authenticated } = useAuthContext();
 
   const [checked, setChecked] = useState(false);
 
@@ -27,7 +21,7 @@ export default function AuthGuard({ children }) {
         returnTo: window.location.pathname,
       }).toString();
 
-      const loginPath = loginPaths[method];
+      const loginPath = paths.auth.login;
 
       const href = `${loginPath}?${searchParams}`;
 
@@ -35,7 +29,7 @@ export default function AuthGuard({ children }) {
     } else {
       setChecked(true);
     }
-  }, [authenticated, method, router]);
+  }, [authenticated, router]);
 
   useEffect(() => {
     check();
