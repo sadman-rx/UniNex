@@ -1,8 +1,21 @@
 {
-  "name": "@minimal-kit/simple-next-js",
-  "author": "Minimals",
-  "version": "5.3.0",
-  "description": "Simple Next & JavaScript",
+  "name": "uninex",
+  "contributors": [
+    {
+      "name": "Sadman Hossain",
+      "email": "sadmanhossainwork@gmail.com"
+    },
+    {
+      "name": "Arnab Banik",
+      "email": "arnab.banik299@gmail.com"
+    },
+    {
+      "name": "Mukit Abdullah",
+      "email": "dymmukit5824@gmail.com"
+    }
+  ],
+  "version": "1.0.0",
+  "description": "UniNex: Connecting United International University Students - An innovative networking platform designed to foster connections, share resources, and enhance the university experience for students, alumni, and faculty at United International University.",
   "private": true,
   "scripts": {
     "dev": "next dev -p 3034",
