@@ -64,7 +64,7 @@ To set up UniNex locally, follow these steps based on your preferred package man
 3. Navigate to the project directory: `cd UniNex`
 4. Run: `yarn install`
 5. Start the development server: `yarn dev`
-6. Access UniNex in your browser at `http://localhost:3000`
+6. Access UniNex in your browser at `http://localhost:3034`
 
 ### Using NPM
 
@@ -72,7 +72,7 @@ To set up UniNex locally, follow these steps based on your preferred package man
 2. Navigate to the project directory: `cd UniNex`
 3. Run: `npm i` or `npm i --legacy-peer-deps`
 4. Start the development server: `npm run dev`
-5. Access UniNex in your browser at `http://localhost:3000`
+5. Access UniNex in your browser at `http://localhost:3034`
 
 ## Contributions
 
@@ -80,6 +80,6 @@ Contributions from the United International University community are welcomed wi
 
 ## Feedback and Support
 
-For any issues, suggestions, or support, please contact us at uninex.support@university.edu.
+For any issues, suggestions, or support, please contact us at sadmanhossainwork@gmail.com.
 
 Thank you for choosing UniNex to empower the United International University community!
