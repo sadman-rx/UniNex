@@ -20,8 +20,6 @@ import { useBoolean } from 'src/hooks/use-boolean';
 import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
 import { useSearchParams, useRouter } from 'src/routes/hooks';
-// config
-import { PATH_AFTER_LOGIN } from 'src/config-global';
 // auth
 import { useAuthContext } from 'src/auth/hooks';
 // components
@@ -89,8 +87,8 @@ export default function RegisterView({ roles }) {
   const onSubmit = handleSubmit(async (data) => {
     try {
       await register?.(data);
-
-      router.push(returnTo || PATH_AFTER_LOGIN);
+      enqueueSnackbar('Registered successfully. Please verify your account before login.');
+      router.push(paths.auth.login);
     } catch (error) {
       console.error(error);
       setErrorMsg(typeof error === 'string' ? error : error.message);

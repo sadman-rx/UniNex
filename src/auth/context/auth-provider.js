@@ -34,12 +34,6 @@ const reducer = (state, action) => {
       user: action.payload.user,
     };
   }
-  if (action.type === 'REGISTER') {
-    return {
-      ...state,
-      user: action.payload.user,
-    };
-  }
   if (action.type === 'LOGOUT') {
     return {
       ...state,
@@ -120,17 +114,7 @@ export function AuthProvider({ children }) {
   // REGISTER
   const register = useCallback(async (data) => {
     const response = await axios.post(endpoints.auth.register, data);
-
-    const { accessToken, user } = response.data;
-
-    sessionStorage.setItem(STORAGE_KEY, accessToken);
-
-    dispatch({
-      type: 'REGISTER',
-      payload: {
-        user,
-      },
-    });
+    return response.ok || false;
   }, []);
 
   // LOGOUT
