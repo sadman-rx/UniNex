@@ -64,7 +64,6 @@ export default function RegisterView({ roles }) {
     lastName: '',
     email: '',
     password: '',
-    callback: paths.auth.login,
   };
 
   const methods = useForm({
@@ -76,7 +75,6 @@ export default function RegisterView({ roles }) {
     watch,
     setValue,
     handleSubmit,
-    errors,
     formState: { isSubmitting },
   } = methods;
 
@@ -86,7 +84,7 @@ export default function RegisterView({ roles }) {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await register?.(data);
+      await register?.({...data, callbackUrl: paths.auth.login});
       enqueueSnackbar('Registered successfully. Please verify your account before login.');
       router.push(paths.auth.login);
     } catch (error) {
