@@ -30,7 +30,7 @@ import FormProvider, { RHFTextField } from 'src/components/hook-form';
 
 // ----------------------------------------------------------------------
 
-export default function RegisterView() {
+export default function RegisterView({ roles }) {
   const { register } = useAuthContext();
 
   const router = useRouter();
@@ -43,40 +43,25 @@ export default function RegisterView() {
 
   const password = useBoolean();
 
-  const roles = [
-    { value: 'student', label: 'Student', icon: 'mdi:account-school-outline' },
-    { value: 'faculty', label: 'Faculty', icon: 'mdi-account-group' },
-    { value: 'alumni', label: 'Alumni', icon: 'mdi:account-group-outline' },
-  ];  
-
   const RegisterSchema = Yup.object().shape({
-    role: Yup.string()
-      .required('Role is required')
-      .oneOf(roles.map(role => role.value), 'Invalid role option'),
+    roleId: Yup.number().required('Role is required'),
     id: Yup.string().required('ID Card Number is required'),
     firstName: Yup.string().required('First name required'),
     lastName: Yup.string().required('Last name required'),
-    email: Yup.string()
-      .when('role', {
-        is: role => ['student', 'faculty'].includes(role),
-        then: () => Yup.string()
-          .email('Invalid email format')
-          .matches(/^[a-zA-Z0-9._%+-]+@(?:[a-zA-Z0-9-]+\.)?uiu\.ac\.bd$/, {
-            message: 'Email must end with @uiu.ac.bd or @[any subdomain].uiu.ac.bd',
-            excludeEmptyString: true,
-          })
-          .required('Email is required'),
-        otherwise: () => Yup.string().email('Invalid email format'),
-      }),
-      password: Yup.string()
-        .required('Password is required')
-        .min(6, 'Password must be at least 6 characters')
-        .max(32, 'Password must not exceed 32 characters'),
+    email: Yup.string().when("roleId", {
+      is: (roleId) => roles.find(r => r.id === roleId)?.requireUIUEmail,
+      then: () => Yup.string().required('Email address is required').email('A valid email address required').matches(/\b[\w\.-]+@(?:\w+\.)?uiu\.ac\.bd\b/, 'Email must end with @uiu.ac.bd or @[subdomain].uiu.ac.bd'),
+      otherwise: () => Yup.string().required('Email address is required').email('A valid email address required'),
+    }),
+    password: Yup.string()
+      .required('Password is required')
+      .min(6, 'Password must be at least 6 characters')
+      .max(32, 'Password must not exceed 32 characters'),
   });
-    
+
 
   const defaultValues = {
-    role: 'student',
+    roleId: roles[0].id,
     id: '',
     firstName: '',
     lastName: '',
@@ -90,15 +75,15 @@ export default function RegisterView() {
   });
 
   const {
-    reset,
     watch,
     setValue,
     handleSubmit,
+    errors,
     formState: { isSubmitting },
   } = methods;
 
   const handleRoleChange = (event, newRole) => {
-    setValue('role', newRole);
+    setValue('roleId', newRole);
   };
 
   const onSubmit = handleSubmit(async (data) => {
@@ -108,7 +93,6 @@ export default function RegisterView() {
       router.push(returnTo || PATH_AFTER_LOGIN);
     } catch (error) {
       console.error(error);
-      reset();
       setErrorMsg(typeof error === 'string' ? error : error.message);
     }
   });
@@ -153,17 +137,17 @@ export default function RegisterView() {
     <FormProvider methods={methods} onSubmit={onSubmit}>
       <Stack spacing={2.5}>
         {!!errorMsg && <Alert severity="error">{errorMsg}</Alert>}
-        
-          <ToggleButtonGroup value={watch('role')} exclusive color="primary" onChange={handleRoleChange}>
-            {roles.map(role => (
-              <ToggleButton key={role.value} value={role.value}>
-                <Stack direction="row" spacing={1}>
-                  <Iconify icon={role.icon} />
-                  <Typography variant="body2">{role.label}</Typography>
-                </Stack>
-              </ToggleButton>
-            ))}
-          </ToggleButtonGroup>
+
+        <ToggleButtonGroup value={watch('roleId')} exclusive color="primary" onChange={handleRoleChange}>
+          {roles.map(role => (
+            <ToggleButton key={role.id} value={role.id}>
+              <Stack direction="row" spacing={1}>
+                <Iconify icon={role.icon} />
+                <Typography variant="body2">{role.label}</Typography>
+              </Stack>
+            </ToggleButton>
+          ))}
+        </ToggleButtonGroup>
 
         <RHFTextField name="id" label="ID Card Number" />
 
@@ -172,10 +156,10 @@ export default function RegisterView() {
           <RHFTextField name="lastName" label="Last name" />
         </Stack>
 
-        <RHFTextField 
-          name="email" 
-          label="Email address" 
-          helperText={watch('role') === 'student' || watch('role') === 'faculty' ? 'Must be a valid UIU email' : ''}
+        <RHFTextField
+          name="email"
+          label="Email address"
+          helperText={roles.find(r => r.id === watch("roleId"))?.requireUIUEmail ? 'Must be a valid UIU email' : ''}
         />
 
         <RHFTextField

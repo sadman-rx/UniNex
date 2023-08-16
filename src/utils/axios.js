@@ -26,6 +26,9 @@ export const fetcher = async (args) => {
 // ----------------------------------------------------------------------
 
 export const endpoints = {
+  role: {
+    list: '/api/role/list',
+  },
   chat: '/api/chat',
   kanban: '/api/kanban',
   calendar: '/api/calendar',
