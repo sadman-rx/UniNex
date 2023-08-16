@@ -4,7 +4,7 @@ import { LoginView } from 'src/sections/auth';
 // ----------------------------------------------------------------------
 
 export const metadata = {
-  title: 'Login',
+  title: 'UniNex Login',
 };
 
 export default function LoginPage() {
