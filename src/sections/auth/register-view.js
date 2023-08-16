@@ -25,6 +25,7 @@ import { useAuthContext } from 'src/auth/hooks';
 // components
 import Iconify from 'src/components/iconify';
 import FormProvider, { RHFTextField } from 'src/components/hook-form';
+import { useSnackbar } from 'src/components/snackbar';
 
 // ----------------------------------------------------------------------
 
@@ -37,7 +38,7 @@ export default function RegisterView({ roles }) {
 
   const searchParams = useSearchParams();
 
-  const returnTo = searchParams.get('returnTo');
+  const { enqueueSnackbar } = useSnackbar();
 
   const password = useBoolean();
 
