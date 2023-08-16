@@ -36,8 +36,6 @@ export default function RegisterView({ roles }) {
 
   const [errorMsg, setErrorMsg] = useState('');
 
-  const searchParams = useSearchParams();
-
   const { enqueueSnackbar } = useSnackbar();
 
   const password = useBoolean();

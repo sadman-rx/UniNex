@@ -13,7 +13,9 @@ import { primaryFont } from 'src/theme/typography';
 // components
 import ProgressBar from 'src/components/progress-bar';
 import MotionLazy from 'src/components/animate/motion-lazy';
+import SnackbarProvider from 'src/components/snackbar/snackbar-provider';
 import { SettingsProvider, SettingsDrawer } from 'src/components/settings';
+
 // auth
 import { AuthProvider, AuthConsumer } from 'src/auth/context';
 
@@ -68,15 +70,17 @@ export default function RootLayout({ children }) {
           >
             <ThemeProvider>
               <MotionLazy>
-                <SettingsDrawer />
-                <ProgressBar />
-                <AuthConsumer>{children}</AuthConsumer>
+                <SnackbarProvider>
+                  <SettingsDrawer />
+                  <ProgressBar />
+                  <AuthConsumer>{children}</AuthConsumer>
+                </SnackbarProvider>
               </MotionLazy>
             </ThemeProvider>
           </SettingsProvider>
         </AuthProvider>
       </body>
-    </html>
+    </html >
   );
 }
 
