@@ -64,6 +64,7 @@ export default function RegisterView({ roles }) {
     lastName: '',
     email: '',
     password: '',
+    callback: paths.auth.login,
   };
 
   const methods = useForm({
