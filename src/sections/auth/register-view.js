@@ -84,7 +84,7 @@ export default function RegisterView({ roles }) {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await register?.({...data, callbackUrl: paths.auth.login});
+      await register?.(data);
       enqueueSnackbar('Registered successfully. Please verify your account before login.');
       router.push(paths.auth.login);
     } catch (error) {
