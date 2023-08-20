@@ -1,9 +1,20 @@
-import { redirect } from 'next/navigation';
-// config
-import { PATH_AFTER_LOGIN } from 'src/config-global';
+'use client';
+
+// auth
+import { AuthGuard } from 'src/auth/guard';
+// components
+import DashboardLayout from 'src/layouts/dashboard';
+
+import { NewsFeedView } from 'src/sections/newsfeed/view';
 
 // ----------------------------------------------------------------------
 
-export default async function HomePage() {
-  redirect(PATH_AFTER_LOGIN);
+export default function Page() {
+  return (
+    <AuthGuard>
+      <DashboardLayout>
+        <NewsFeedView />
+      </DashboardLayout>
+    </AuthGuard>
+  );
 }

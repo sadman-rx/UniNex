@@ -58,7 +58,6 @@ export default function LoginView() {
   });
 
   const {
-    reset,
     handleSubmit,
     formState: { isSubmitting },
   } = methods;

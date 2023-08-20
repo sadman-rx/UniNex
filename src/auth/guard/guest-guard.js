@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import { useCallback, useEffect } from 'react';
 // routes
-import { paths } from 'src/routes/paths';
 import { useRouter, useSearchParams } from 'src/routes/hooks';
 //
+import { PATH_AFTER_LOGIN } from 'src/config-global';
 import { useAuthContext } from '../hooks';
 
 // ----------------------------------------------------------------------
@@ -13,7 +13,7 @@ export default function GuestGuard({ children }) {
 
   const searchParams = useSearchParams();
 
-  const returnTo = searchParams.get('returnTo') || paths.dashboard.root;
+  const returnTo = searchParams.get('returnTo') || PATH_AFTER_LOGIN;
 
   const { authenticated } = useAuthContext();
 

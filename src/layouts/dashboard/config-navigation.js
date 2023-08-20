@@ -49,35 +49,29 @@ export function useNavData() {
       // OVERVIEW
       // ----------------------------------------------------------------------
       {
-        subheader: 'overview v5.3.0',
+        subheader: '',
         items: [
-          { title: 'one', path: paths.dashboard.root, icon: ICONS.dashboard },
-          { title: 'two', path: paths.dashboard.two, icon: ICONS.ecommerce },
-          {
-            title: 'three',
-            path: paths.dashboard.three,
-            icon: ICONS.analytics,
-          },
+          { title: 'News Feed', path: paths.newsFeed, icon: ICONS.dashboard },
         ],
       },
 
       // MANAGEMENT
       // ----------------------------------------------------------------------
-      {
-        subheader: 'management',
-        items: [
-          {
-            title: 'user',
-            path: paths.dashboard.group.root,
-            icon: ICONS.user,
-            children: [
-              { title: 'four', path: paths.dashboard.group.root },
-              { title: 'five', path: paths.dashboard.group.five },
-              { title: 'six', path: paths.dashboard.group.six },
-            ],
-          },
-        ],
-      },
+      // {
+      //   subheader: 'management',
+      //   items: [
+      //     {
+      //       title: 'user',
+      //       path: paths.dashboard.group.root,
+      //       icon: ICONS.user,
+      //       children: [
+      //         { title: 'four', path: paths.dashboard.group.root },
+      //         { title: 'five', path: paths.dashboard.group.five },
+      //         { title: 'six', path: paths.dashboard.group.six },
+      //       ],
+      //     },
+      //   ],
+      // },
     ],
     []
   );

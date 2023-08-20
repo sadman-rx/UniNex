@@ -10,8 +10,7 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 // routes
 import { useRouter } from 'src/routes/hooks';
-// hooks
-import { useMockedUser } from 'src/hooks/use-mocked-user';
+import { paths } from 'src/routes/paths';
 // auth
 import { useAuthContext } from 'src/auth/hooks';
 // components
@@ -40,9 +39,7 @@ const OPTIONS = [
 export default function AccountPopover() {
   const router = useRouter();
 
-  const { user } = useMockedUser();
-
-  const { logout } = useAuthContext();
+  const { user, logout } = useAuthContext();
 
   const popover = usePopover();
 
@@ -50,7 +47,7 @@ export default function AccountPopover() {
     try {
       await logout();
       popover.onClose();
-      router.replace('/');
+      router.push(paths.auth.login);
     } catch (error) {
       console.error(error);
     }
